@@ -26,7 +26,13 @@ export class Storage {
 
   constructor(ctx: Context, options: StorageOptions) {
     this.ctx = ctx
-    this.options = options
+
+    // applies patch suggested here:
+    // https://github.com/nuxt-community/auth-module/issues/1765#issuecomment-1165327340
+    this.options = {
+      ...options,
+      ...(ctx.$config && ctx.$config.auth)
+    }
 
     this._initState()
   }
